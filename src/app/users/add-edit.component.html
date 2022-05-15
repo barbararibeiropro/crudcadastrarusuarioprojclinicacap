@@ -1,0 +1,82 @@
+﻿<h1 *ngIf="isAddMode">Adcionar Usuário </h1>
+<h1 *ngIf="!isAddMode">Editar usuário</h1>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Tipo de profissional</label>
+            <select formControlName="title" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.title.errors }">
+                <option value="">Médico</option>
+                <option value="Mr">Apoio</option>
+                <option value="Mrs">Administação</option>
+        
+            </select>
+            <div *ngIf="submitted && f.title.errors" class="invalid-feedback">
+                <div *ngIf="f.title.errors.required">Title is required</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>Nome</label>
+            <input type="text" formControlName="firstName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.firstName.errors }" />
+            <div *ngIf="submitted && f.firstName.errors" class="invalid-feedback">
+                <div *ngIf="f.firstName.errors.required">Insira aqui o nome</div>
+            </div>
+        </div>
+        <div class="form-group col-5">
+            <label>Sobrenome</label>
+            <input type="text" formControlName="lastName" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.lastName.errors }" />
+            <div *ngIf="submitted && f.lastName.errors" class="invalid-feedback">
+                <div *ngIf="f.lastName.errors.required">Insira o sobrenome</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-row">
+        <div class="form-group col-7">
+            <label>Email</label>
+            <input type="text" formControlName="email" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.email.errors }" />
+            <div *ngIf="submitted && f.email.errors" class="invalid-feedback">
+                <div *ngIf="f.email.errors.required">Insira o email</div>
+                <div *ngIf="f.email.errors.email">Deve ser um email valido</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Tipo de acesso</label>
+            <select formControlName="role" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.role.errors }">
+                <option value=""></option>
+                <option value="User">Usuario</option>
+                <option value="Admin">Administrador</option>
+            </select>
+            <div *ngIf="submitted && f.role.errors" class="invalid-feedback">
+                <div *ngIf="f.role.errors.required">Role is required</div>
+            </div>
+        </div>
+    </div>
+    <div *ngIf="!isAddMode">
+        <h3 class="pt-3">Mude a senha</h3>
+        <p>Deixe em branco pra mesma senha</p>
+    </div>
+    <div class="form-row">
+        <div class="form-group col">
+            <label>Senha</label>
+            <input type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.password.errors }" />
+            <div *ngIf="submitted && f.password.errors" class="invalid-feedback">
+                <div *ngIf="f.password.errors.required">Senha é necessária</div>
+                <div *ngIf="f.password.errors.minlength">Senha deve ter até 6 caracteres</div>
+            </div>
+        </div>
+        <div class="form-group col">
+            <label>Confirme a senha</label>
+            <input type="password" formControlName="confirmPassword" class="form-control" [ngClass]="{ 'is-invalid': submitted && f.confirmPassword.errors }" />
+            <div *ngIf="submitted && f.confirmPassword.errors" class="invalid-feedback">
+                <div *ngIf="f.confirmPassword.errors.required">Confirmar a senha é necessário</div>
+                <div *ngIf="f.confirmPassword.errors.mustMatch">As senhas devem ser iguais</div>
+            </div>
+        </div>
+    </div>
+    <div class="form-group">
+        <button [disabled]="loading" class="btn btn-primary">
+            <span *ngIf="loading" class="spinner-border spinner-border-sm mr-1"></span>
+            Salvar
+        </button>
+        <a routerLink="/users" class="btn btn-primary">Cancelar</a>
+    </div>
+</form>
